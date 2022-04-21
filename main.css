@@ -1,3 +1,8 @@
-body {
+ body {
   background-color: lightpink;
+}
+
+.card {
+  display: flex;
+  flex-flow: row wrap;
 }
