@@ -248,7 +248,8 @@ const app = document.querySelector("#app");
 
 for (const number of pets) {
 
-domString += `<div class="card" style="width: 18rem;">
+domString += `
+<div class="card" style="width: 18rem;">
   <div class="card-body">
   <p class="card-text">${number.name}</p>
   <img src="${number.imageUrl}" class="card-img-top" alt="pics of pets">

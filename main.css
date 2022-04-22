@@ -2,7 +2,19 @@
   background-color: lightpink;
 }
 
-.card {
+.buttons {
+ display: flex;
+ justify-content: center;
+ margin-top: 100px;
+ margin-bottom: 100px;
+
+
+}
+
+.card-container {
   display: flex;
-  flex-flow: row wrap;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+  flex-shrink: initial;
 }
