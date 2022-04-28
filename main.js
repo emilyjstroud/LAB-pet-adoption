@@ -245,10 +245,77 @@ const pets = [
 
 const app = document.querySelector("#app");
 
+// *********  UTILITY FUNCTIONS  ********* //
 
-for (const number of pets) {
+const renderToDom = (divId, textToRender) => {
+  const selectedElement = document.querySelector(divId);
+  selectedElement.innerHTML = textToRender;
+};
 
-domString += `
+const videoBtnModal = () => {
+  const domString = `
+    <!-- Button trigger modal -->
+    <button type="button" class="btn btn-light" data-bs-toggle="modal" data-bs-target="#add-video">
+    Add Video
+    </button>
+    <!-- Modal -->
+    <div class="modal fade" id="add-video" tabindex="-1" aria-labelledby="add-video" aria-hidden="true">
+      <div class="modal-dialog modal-fullscreen-md-down">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Add Video</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body" id="modal-body">
+          <form>
+          <div class="form-floating mb-3">
+            <input class="form-control form-control-lg" type="text" placeholder="Video ID" id="videoId" aria-label="video id" required>
+            <label for="videoId">YouTube Video ID</label>
+          </div>
+      
+          <div class="form-floating mb-3">
+            <input class="form-control form-control-lg" type="text" placeholder="Title" id="title" aria-label="title" required>
+            <label for="title">Title</label>
+          </div>
+      
+          <div class="form-floating mb-3">
+            <select class="form-select form-control-lg" id="category" aria-label="category" required>
+              <option value="">Select a category</option>
+              <option value="html">HTML</option>
+              <option value="css">CSS</option>
+              <option value="javascript">JavaScript</option>
+              <option value="music">Music</option>
+            </select>
+            <label for="category">Category</label>
+          </div>
+          
+          <div class="form-check mb-3">
+            <input class="form-check-input" type="checkbox" value="" id="favorite">
+            <label class="form-check-label" for="favorite">
+              Favorite
+            </label>
+          </div>
+      
+          <button 
+            type="submit" 
+            class="btn btn-success" 
+          >
+            Submit
+          </button>
+        </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  `;
+  renderToDom('#createBtnContainer', domString);
+};
+
+// *** Cards *** //
+const cardsOnDom = (taco) => {
+  let domString= " ";
+  for (const number of taco) {
+  domString += `
 <div class="card" style="width: 18rem;">
   <div class="card-body">
   <p class="card-text">${number.name}</p>
@@ -259,4 +326,81 @@ domString += `
   </div>
 </div>`;
 }
+renderToDom('#app', domString);
+};
+
+// *** EVENT LISTENERS *** //
+// const eventListeners = () => {
+//   // const forModal = new.bootstrap.Modal(document.querySelector("#add-form"));
+// }
+
+// *********  HTML COMPONENT FUNCTIONS  ********* //
+// Add Video Button / Modal
+
+// Filter Button Row//
+const filterButtons = () => {
+  const domString = `
+  <div class="d-flex flex-wrap justify-content-between my-3">
+    <button class="btn btn-outline-dark btn-lg buttonRow" id="dog">Dogs</button>
+    <button class="btn btn-outline-danger btn-lg buttonRow" id="cat">Cats</button>
+    <button class="btn btn-outline-info btn-lg buttonRow" id="dino">Dinos</button>
+    <button class="btn btn-outline-dark btn-lg buttonRow" id="allpets">All Pets</button>
+  </div>
+  `;
+  renderToDom('#filterContainer', domString);
+};
+
+const filter =  (e) => {
+  console.log("dog" === e.target.id)
+  if ("cat" === e.target.id) { 
+    console.log("this is cat");
+  } else if  ("dino" === e.target.id) {
+    console.log("this is a dino");
+  } else if ("allpets" === e.target.id) {
+    console.log ("these are all the pets");
+  } else if ("dog" === e.target.id) {
+    console.log("this is a dog");
+  }
+}
+
+//  filterButtons ();
+
 app.innerHTML = domString;
+
+
+// *** FILTER BUTTON ROW *** //
+
+document.querySelector('#filterContainer').addEventListener('click', (e) => {
+  console.log("You clicked a filter button", e.target.id);
+  if (e.target.id === "allpets") {
+    cardsOnDom(pets);
+  } else if (e.target.id) {
+    const topics = pets.filter((taco) => taco.type === e.target.id);
+    console.log(topics)
+    cardsOnDom(topics);
+  }
+
+});
+
+// *** BUTTONS ON CARDS *** //
+
+// document.querySelector('#card-container').addEventListener('click', (e) => {
+//   // check to make sure e.target.id is not empty
+//   if (e.target.id) {
+//     console.log(e.target.id.split("--"));
+    
+  //   const [method, videoID] = e.target.id.split("--");
+  //   // only listen for events with "watch" or "delete" included in the string
+  //   const index = data.findIndex((taco) => taco.videoId === videoID);
+
+  //   //go back here vv
+
+  //   // if watch: grab the ID and rerender the videoPlayer with that ID as an argument
+  //   if (e.target.id.includes('watch')) {
+  //     videoPlayer(videoID);   
+
+
+
+filterButtons();
+cardsOnDom(pets);
+eventListeners(); // always last
